@@ -1,7 +1,7 @@
 // All the routes that have to do with posts.
 import express from 'express';
 
-import { getPosts } from '../controllers/posts.js';
+import { getPosts, createPost } from '../controllers/posts.js';
 
 // Set up the router.
 const router = express.Router();
@@ -18,6 +18,8 @@ const router = express.Router();
 
 // import 'getPosts' function for this route up above from 'posts.js' in 'controllers' and add it here as the second argument.
 router.get('/', getPosts);
+
+router.post('/', createPost);
 
 // Export the router.
 export default router;
