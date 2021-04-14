@@ -3,9 +3,17 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
+import postRoutes from './routes/posts.js';
+
 // Initialize the app.
 // After doing this, we can now run all the methods in this app instance.
 const app = express();
+
+// Use Express middleware to connect our routes to the application.
+// First parameter: Set up the starting parameter for ALL the routes in 'post.js'.
+// Second parameter: set the route.
+// So: Every route inside of 'postRoutes' is going to start with '/posts'.
+app.use('/posts', postRoutes);
 
 // General setup - set up body parser so we can appropriately send our requests
 // We're going to be sending images, which can be large in size, so we want to set a limit.
