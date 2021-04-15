@@ -9,17 +9,20 @@ import postRoutes from './routes/posts.js';
 // After doing this, we can now run all the methods in this app instance.
 const app = express();
 
-// Use Express middleware to connect our routes to the application.
-// First parameter: Set up the starting parameter for ALL the routes in 'post.js'.
-// Second parameter: set the route.
-// So: Every route inside of 'postRoutes' is going to start with '/posts'.
-app.use('/posts', postRoutes);
-
 // General setup - set up body parser so we can appropriately send our requests
 // We're going to be sending images, which can be large in size, so we want to set a limit.
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
+
+// Use Express middleware to connect our routes to the application.
+// First parameter: Set up the starting parameter for ALL the routes in 'post.js'.
+// Second parameter: set the route.
+// So: Every route inside of 'postRoutes' is going to start with '/posts'.
+
+// NOTE: This line needs to come AFTER this line: 'app.use(cors())'
+// Otherwise we will get a CORS warning in the console.
+app.use('/posts', postRoutes);
 
 // Connect server application with real database (use MongoDB for this - the Cloud Atlas version of MongoDB)
 const CONNECTION_URL =
