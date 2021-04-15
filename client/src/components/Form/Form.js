@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
+import { createPost } from '../../actions/posts';
 import useStyles from './styles';
 
 const Form = () => {
@@ -11,9 +13,15 @@ const Form = () => {
     tags: '',
     selectedFile: '',
   });
+  // This allows us to dispatch actions (on the 'handleSubmit' - once the use submits,
+  // we want to send over a Post request with all the data the user has typed in).
+  const dispatch = useDispatch();
   const classes = useStyles();
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(createPost(postData));
+  };
 
   const clear = () => {};
 

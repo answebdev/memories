@@ -4,7 +4,7 @@ export default (posts = [], action) => {
       // 'action.payload' is our actual posts
       return action.payload;
     case 'CREATE':
-      return posts;
+      return [...posts, action.payload];
     default:
       return posts;
   }

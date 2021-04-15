@@ -25,3 +25,14 @@ export const getPosts = () => async (dispatch) => {
     console.log(error.message);
   }
 };
+
+// After this, we need to dispatch this action in Form.js (see Form.js) => import 'useDispatch' from React-Redux.
+export const createPost = (post) => async (dispatch) => {
+  try {
+    // Make Post request to backend server:
+    const { data } = await api.createPost(post);
+    dispatch({ type: 'CREATE', payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -4,5 +4,6 @@ import axios from 'axios';
 // This will return all of the posts that are currently in the database.
 const url = 'http://localhost:5000/posts';
 
-// Export function so that it can be used in another file.
+// Export functions so that they can be used in another file (e.g., actions/posts.js)
 export const fetchPosts = () => axios.get(url);
+export const createPost = (newPost) => axios.post(url, newPost);
