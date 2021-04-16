@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
-import { createPost } from '../../actions/posts';
-import useStyles from './styles';
 
-const Form = () => {
+import useStyles from './styles';
+import { createPost, updatePost } from '../../actions/posts';
+// import { updatePost } from '../../../../server/controllers/posts';
+
+const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
     creator: '',
     title: '',
@@ -13,17 +15,43 @@ const Form = () => {
     tags: '',
     selectedFile: '',
   });
+  // We only want the data for the updated post, so we use a ternary.
+  const post = useSelector((state) =>
+    currentId ? state.posts.find((p) => p._id === currentId) : null
+  );
   // This allows us to dispatch actions (on the 'handleSubmit' - once the use submits,
   // we want to send over a Post request with all the data the user has typed in).
   const dispatch = useDispatch();
   const classes = useStyles();
 
+  // Use 'useEffect' to populate the values of the form to update the information upon clicking the Edit button.
+  useEffect(() => {
+    if (post) setPostData(post);
+
+    // Have this useEffect run when the 'post' value changes (when the post is updated).
+  }, [post]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createPost(postData));
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+    } else {
+      dispatch(createPost(postData));
+    }
+    clear();
   };
 
-  const clear = () => {};
+  // Clear input fields after submitting.
+  const clear = () => {
+    setCurrentId(null);
+    setPostData({
+      creator: '',
+      title: '',
+      message: '',
+      tags: '',
+      selectedFile: '',
+    });
+  };
 
   return (
     <Paper className={classes.paper}>
@@ -33,7 +61,9 @@ const Form = () => {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography variant='h6'>Creating a Memory</Typography>
+        <Typography variant='h6'>
+          {currentId ? 'Editing' : 'Creating'} a Memory
+        </Typography>
         <TextField
           name='creator'
           variant='outlined'

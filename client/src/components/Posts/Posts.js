@@ -4,7 +4,7 @@ import { Grid, CircularProgress } from '@material-ui/core';
 import Post from './Post/Post';
 import useStyles from './styles';
 
-const Posts = () => {
+const Posts = ({ setCurrentId }) => {
   // Use 'useSelector' to fetch data from global Redux Store ('state').
   // ('state.posts' => 'posts' comes from reducers/index.js)
   const posts = useSelector((state) => state.posts);
@@ -25,7 +25,7 @@ const Posts = () => {
       >
         {posts.map((post) => (
           <Grid key={post._id} item xs={12} sm={6}>
-            <Post post={post} />
+            <Post post={post} setCurrentId={setCurrentId} />
           </Grid>
         ))}
       </Grid>
