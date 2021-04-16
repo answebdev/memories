@@ -1,7 +1,12 @@
 // All the routes that have to do with posts.
 import express from 'express';
 
-import { getPosts, createPost, updatePost } from '../controllers/posts.js';
+import {
+  getPosts,
+  createPost,
+  updatePost,
+  deletePost,
+} from '../controllers/posts.js';
 
 // Set up the router.
 const router = express.Router();
@@ -22,6 +27,9 @@ router.post('/', createPost);
 
 // 'patch' is used for updating existing documents.
 router.patch('/:id', updatePost);
+
+// Route for Delete.
+router.delete('/:id', deletePost);
 
 // Export the router.
 export default router;
