@@ -6,6 +6,7 @@ import {
   createPost,
   updatePost,
   deletePost,
+  likePost,
 } from '../controllers/posts.js';
 
 // Set up the router.
@@ -30,6 +31,10 @@ router.patch('/:id', updatePost);
 
 // Route for Delete.
 router.delete('/:id', deletePost);
+
+// Route for Liking.
+// Since liking something is 'updating' something (it's updating the number of 'likes' a post has), use 'patch'.
+router.patch('/:id/likePost', likePost);
 
 // Export the router.
 export default router;

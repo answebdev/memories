@@ -67,8 +67,29 @@ export const deletePost = async (req, res) => {
 
   // Delete post - pass in the 'id' we receive from the 'params' above.
   await PostMessage.findByIdAndRemove(id);
-
   console.log('DELETE');
-
   res.json({ message: 'Post deleted successfully' });
+};
+
+// Like logic
+export const likePost = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send('No post with that ID');
+
+  // Find the post we're looking for.
+  const post = await PostMessage.findById(id);
+
+  // Pass in the updates as the second parameter to 'findByIdAndUpdate' - this is going to be an object.
+  // The third parameter is 'new: true', which is inside of an object.
+  const updatedPost = await PostMessage.findByIdAndUpdate(
+    id,
+    {
+      likeCount: post.likeCount + 1,
+    },
+    { new: true }
+  );
+
+  res.json(updatedPost);
 };
