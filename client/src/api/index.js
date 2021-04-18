@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // URL that points to our backend route.
 // This will return all of the posts that are currently in the database.
-const url = 'http://localhost:5000/posts';
+const url = 'https://me-mories.herokuapp.com/posts';
 
 // Export functions so that they can be used in another file (e.g., actions/posts.js)
 export const fetchPosts = () => axios.get(url);
