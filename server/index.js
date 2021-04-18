@@ -26,12 +26,10 @@ app.use(cors());
 // Otherwise we will get a CORS warning in the console.
 app.use('/posts', postRoutes);
 
-// Connect server application with real database (use MongoDB for this - the Cloud Atlas version of MongoDB)
-const CONNECTION_URL =
-  'mongodb+srv://answebdev:webmaster221@cluster0.iucus.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 5000;
 
 // Connect to our database
+// Connect server application with real database (use MongoDB for this - the Cloud Atlas version of MongoDB)
 mongoose
   .connect(process.env.CONNECTION_URL, {
     useNewUrlParser: true,
