@@ -2,12 +2,14 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
-
+import dotenv from 'dotenv';
 import postRoutes from './routes/posts.js';
 
 // Initialize the app.
 // After doing this, we can now run all the methods in this app instance.
 const app = express();
+
+dotenv.config();
 
 // General setup - set up body parser so we can appropriately send our requests
 // We're going to be sending images, which can be large in size, so we want to set a limit.
@@ -31,7 +33,7 @@ const PORT = process.env.PORT || 5000;
 
 // Connect to our database
 mongoose
-  .connect(CONNECTION_URL, {
+  .connect(process.env.CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
