@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { AppBar, Avatar, Toolbar, Typography, Button } from '@material-ui/core';
 import memories from '../../images/memories.png';
 import useStyles from './styles';
@@ -8,8 +9,21 @@ const Navbar = () => {
   const classes = useStyles();
   // Retrieve user from local storage:
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
 
-  console.log(user);
+  // console.log(user);
+
+  const logout = () => {
+    dispatch({ type: 'LOGOUT' });
+
+    // Redirect to home page after logout:
+    history.push('/');
+
+    // Set user to null after logging out:
+    setUser(null);
+  };
 
   useEffect(() => {
     const token = user?.token;
@@ -17,7 +31,10 @@ const Navbar = () => {
     // Check for the JSON Web Token for manual sign up
 
     setUser(JSON.parse(localStorage.getItem('profile')));
-  }, []);
+    // Set the user when the location changes
+  }, [location]);
+
+  // STOPPED AT 1:16:10 (PT. 3)
 
   return (
     <AppBar className={classes.appBar} position='static' color='inherit'>
@@ -57,6 +74,7 @@ const Navbar = () => {
               variant='contained'
               className={classes.logout}
               color='secondary'
+              onClick={logout}
             >
               Logout
             </Button>
