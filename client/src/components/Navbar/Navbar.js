@@ -34,8 +34,6 @@ const Navbar = () => {
     // Set the user when the location changes
   }, [location]);
 
-  // STOPPED AT 1:16:10 (PT. 3)
-
   return (
     <AppBar className={classes.appBar} position='static' color='inherit'>
       <div className={classes.brandContainer}>
