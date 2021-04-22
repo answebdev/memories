@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import postRoutes from './routes/posts.js';
+import userRoutes from './routes/users.js';
 
 // Initialize the app.
 // After doing this, we can now run all the methods in this app instance.
@@ -25,6 +26,9 @@ app.use(cors());
 // NOTE: This line needs to come AFTER this line: 'app.use(cors())'
 // Otherwise we will get a CORS warning in the console.
 app.use('/posts', postRoutes);
+
+// User routes
+app.use('/user', userRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello to Memories API');

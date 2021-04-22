@@ -1,6 +1,7 @@
 // All the routes that have to do with posts.
 import express from 'express';
 
+// Get the controllers
 import {
   getPosts,
   createPost,
