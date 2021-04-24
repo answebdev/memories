@@ -12,6 +12,8 @@ export const signin = (formData, history) => async (dispatch) => {
   try {
     // Send data to the database / the backend:
     // Log in user.
+    const { data } = await api.signIn(formData);
+    dispatch({ type: AUTH, data });
 
     // Navigate to Home Page
     history.push('/');
@@ -25,6 +27,8 @@ export const signup = (formData, history) => async (dispatch) => {
   try {
     // Send data to the database / the backend:
     // Sign up user.
+    const { data } = await api.signUp(formData);
+    dispatch({ type: AUTH, data });
 
     // Navigate to Home Page
     history.push('/');
