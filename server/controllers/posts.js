@@ -75,21 +75,37 @@ export const deletePost = async (req, res) => {
 export const likePost = async (req, res) => {
   const { id } = req.params;
 
+  // Logic to make it so that a user can only like the post one time only.
+  // We first need to check if the user is authenticated.
+  if (!req.userId) return res.json({ message: 'Not authenticated' });
+
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send('No post with that ID');
 
   // Find the post we're looking for.
   const post = await PostMessage.findById(id);
 
+  // Check if the user's ID is already in the 'like' section or not.
+  // Loop through each ID so we can see who (which of the users) liked a specific post.
+  // If the ID is equal to 'req.userId' that means the ID is already in there, and means that the user already liked the post,
+  // and this is going to be a 'dislike' and not a 'like'.
+  const index = post.likes.findIndex((id) => id === String(req.userId));
+
+  // Only if the ID is not found - only then is it going to equal -1.
+  // This is for if the user wants to 'like' the post:
+  if (index === -1) {
+    // Like the post
+    post.likes.push(req.userId);
+  } else {
+    // Get the index of the user's like and remove the user's like (i.e. dislike the post)
+    post.likes = post.likes.filter((id) => id !== String(req.userId));
+  }
+
   // Pass in the updates as the second parameter to 'findByIdAndUpdate' - this is going to be an object.
   // The third parameter is 'new: true', which is inside of an object.
-  const updatedPost = await PostMessage.findByIdAndUpdate(
-    id,
-    {
-      likeCount: post.likeCount + 1,
-    },
-    { new: true }
-  );
+  const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
+    new: true,
+  });
 
   res.json(updatedPost);
 };

@@ -1,8 +1,10 @@
 // Authentication Middleware.
 // The middleware here is going to be for Auth.
-// This middleware allows a user to, once logged in, do certain actions, like deleting posts (this middleware says, okay, you are allowed to delete this post).
+// This middleware allows a user to, once logged in, do certain actions,
+// like deleting posts (this middleware says, okay, you are allowed to delete this post).
 
-// This middleware is going to be used in the routes (see 'routes/posts.js') (for example, when somebody 'likes' something - see last example - notes / comments - below).
+// This middleware is going to be used in the routes (see 'routes/posts.js')
+// (for example, when somebody 'likes' something - see last example - notes / comments - below).
 
 import jwt from 'jsonwebtoken';
 
@@ -29,7 +31,8 @@ const auth = async (req, res, next) => {
 
     // If we have the token, and the token is our own token (a 'customAuth' token),
     // then we want to set the 'decodedData' to be equal to 'jwt.verify'.
-    // Inside, we pass the 'token' and the 'secret' (from the controller - 'user.js'), which in our case is 'test' (it must be the same exact secret we use when that specific token is created).
+    // Inside, we pass the 'token' and the 'secret' (from the controller - 'user.js'),
+    // which in our case is 'test' (it must be the same exact secret we use when that specific token is created).
     // This is going to give us the data from each specific token -
     // it's going to give us the username of the person, and it's ID:
     if (token && isCustomAuth) {
